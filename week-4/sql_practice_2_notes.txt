@@ -1,0 +1,45 @@
+// SQL Practice #2 Notes
+
+// 1.
+INSERT INTO cd.facilities
+(facid, name, membercost, guestcost, initialoutlay, monthlymaintenance)
+VALUES (9, 'Spa', 20, 30, 100000, 800);
+
+// 2.
+INSERT INTO cd.facilities
+(facid, name, membercost, guestcost, initialoutlay, monthlymaintenance)
+VALUES
+(9, 'Spa', 20, 30, 100000, 800),
+(10, 'Squash Court 2', 3.5, 17.5, 5000, 80);
+
+// 3.
+INSERT INTO cd.facilities
+(facid, name, membercost, guestcost, initialoutlay, monthlymaintenance)
+SELECT (SELECT MAX(facid) FROM cd.facilities)+1, 'Spa', 20, 30, 100000, 800;
+
+// 4.
+UPDATE cd.facilities
+SET initialoutlay = 10000
+WHERE facid = 1;
+
+// 5. 
+UPDATE cd.facilities
+SET membercost = 6, guestcost = 30
+WHERE facid IN (0,1);
+
+// 6.
+UPDATE cd.facilities
+SET 
+membercost = (SELECT membercost * 1.1 FROM cd.facilities WHERE facid = 0),
+guestcost = (SELECT guestcost * 1.1 FROM cd.facilities WHERE facid = 0)
+WHERE facid = 1;
+
+// 7.
+DELETE FROM cd.bookings
+
+// 8.
+DELETE FROM cd.members WHERE memid = 37;
+
+// 9.
+DELETE FROM cd.members WHERE memid NOT IN (SELECT memid FROM cd.bookings);
+

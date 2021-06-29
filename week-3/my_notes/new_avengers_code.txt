@@ -1,0 +1,134 @@
+// FSW 140
+using mySQL and postgreSQL
+Username: root 
+Password: Welcome83201!
+
+
+// Week 3 New Avengers sql code and questions:
+
+USE avengers;
+
+-- 1. Show all of the information on the Avengers.
+
+SELECT * FROM avengers;
+
+-- 2. Create a new table with information from another super hero group, Make sure there is an appropriate header and must be at least 30 rows.
+
+CREATE TABLE IF NOT EXISTS DC_CHARACTERS (
+char_name VARCHAR(100) DEFAULT NULL,
+char_alias VARCHAR(100) DEFAULT NULL,
+char_powers VARCHAR(200) DEFAULT NULL,
+char_weapons VARCHAR(50) DEFAULT NULL,
+char_id int(100) NOT NULL,
+primary key(char_id)
+);
+
+INSERT INTO DC_CHARACTERS (char_name, char_alias, char_powers, char_weapons, char_id)
+VALUES 
+('Andrew Bennett', 'None', 'Vampiric powers including shape shifting.', 'None', '1'),
+('Barbara Gordon', 'Batgirl', 'None', 'Batarangs', '2'),
+('Bruce Wayne', 'Batman', 'None', 'High tech gadgets', '3'),
+('Selina Kyle', 'Catwoman', 'None', 'Whip', '4'),
+('Floyd Lawton', 'Deadshot', 'Accuracy', 'Guns', '5'),
+('Kent Nelson', 'Doctor Fate', 'Immortal and Magic', 'Helmet', '6'),
+('Dolphin', 'None', 'Underwater breathing', 'None', '7'),
+('Barry Allen', 'The Flash', 'Super Speed', 'Cosmic Treadmill', '8'),
+('Beatriz Bonilla da Costa', 'Fire', 'Living green fire', 'None', '9'),
+('Frankenstein', 'None', 'Super Strength', 'Steam Gun', '10'),
+('Harold Jordan', 'Green Lantern', 'Flight', 'Green Lantern', '11'),
+('Kendra Saunders', 'Hawkgirl', 'Reincarnation', 'Metal Mace', '12'),
+('Carter Hall', 'Hawkman', 'Physical Regeneration', 'Metal Mace', '13'),
+('Tommy Monaghan', 'Hitman', 'Telepathy', 'Handguns', '14'),
+('Jimmy Olsen', 'Elastic Lad', 'None', 'Camera', '15'),
+('Princess Aline Haiden', 'Jinx', 'Elemental Influence', 'None', '16'),
+('Johnny Thunder', 'None', 'Thunder', 'Magic Pen', '17'),
+('Waylon Jones', 'Killer Croc', 'Crocodile Skin', 'None', '18'),
+('Crystal Frost', 'Killer Frost', 'Ice', 'None', '19'),
+('Lobo', 'None', 'Superhuman Senses', 'Hook Chain', '20'),
+('Rex Mason', 'Metamorpho', 'Becomes Elements', 'None', '21'),
+('Jervis Tetch', 'Mad Hatter', 'None', 'Mind Control Technology', '22'),
+('Richard John Grayson', 'Nightwing', 'None', 'Eskrima Sticks', '23'),
+('Pamela Lillian Isley', 'Poison Ivy', 'Controls Plants', 'Mutated Plants', '24'),
+('Patrick Obrian', 'Plastic Man', 'Elasticity', 'None', '25'),
+('Rachel Roth', 'Raven', 'Telekenesis', 'None', '26'),
+('Damian Wayne', 'Robin', 'None', 'Various Gadgets', '27'),
+('Jim Corrigan', 'The Specter', 'Omnipotent', 'None', '28'),
+('Alec Holland', 'Swanp Thing', 'Controls Plants', 'None', '29'),
+('Harvey Dent', 'Two Face', 'Toxic Immunity', 'Handguns', '30');
+
+-- 3. Add a column to your new table (let us call it the new superheros) for those who are interested in joining the Avengers. Make this be randomly assigned.
+--  Hint: it is okay for this to be a multi-step query.  You will have to use rand() function and CASE WHEN statement too.alter
+
+ALTER TABLE dc_characters ADD new_superheros VARCHAR(3);
+
+UPDATE avengers.dc_characters 
+SET new_superheros = (CASE FLOOR(RAND()*2) WHEN 0 THEN 'no' WHEN 1 THEN 'yes'END)
+WHERE char_id BETWEEN 1 AND 30;
+
+
+-- 4. Add a column to your new table (the new superheros) 
+-- for their favorite Avenger (have it randomly choose between  Anthony Edward "Tony" Stark,  Robert Bruce Banner, & Victor Shade)
+
+ALTER TABLE dc_characters ADD favorite_avenger VARCHAR(50);
+
+UPDATE avengers.dc_characters SET favorite_avenger = (CASE FLOOR(RAND()*4)  WHEN 0 THEN 'Anthony Edward' WHEN 1 THEN 'Tony Stark'
+WHEN 2 THEN 'Robert Bruce Banner' WHEN 3 THEN 'Victor Shade' END)
+WHERE char_id BETWEEN 1 AND 30;
+
+-- 5. Use a JOIN statement between the two tables for who is interested in joining the Avengers.
+
+SELECT DISTINCT * FROM avengers.avengers
+CROSS JOIN dc_characters
+WHERE new_superheros = 'yes';
+
+-- 6. List all Avengers who have more than 1000 appearances in alphabetic order.
+
+SELECT appearances, name FROM avengers WHERE (appearances > 1000)
+ORDER BY name ASC;
+
+-- 7. What Avengers do not have more than 1000 appearances?
+
+SELECT appearances, name FROM avengers WHERE (appearances < 1000);
+
+-- 8. Not more than 500?
+
+SELECT appearances, name FROM avengers WHERE (appearances < 500);
+
+-- 9. Not more than 50 and female?
+
+SELECT appearances, gender FROM avengers WHERE (appearances < 50 AND gender = 'female');
+
+-- 10. More than 150, male, and are full members?
+
+SELECT appearances, gender, honorary FROM avengers WHERE (appearances > 150 AND gender = 'male' AND honorary = 'FULL');
+
+
+-- EXTRA CREDIT
+
+-- 1. Write a function that can add a new superhero to the Avengers if they are interested in becoming an Avenger and if their favorite Avenger is Victor Shade.
+
+SELECT * FROM dc_characters WHERE new_superheros = 'yes' AND favorite_avenger = 'Victor Shade';
+
+-- 2. Write a "totalRecords" function that counts the total amount of records(rows/entries) in a given table.
+
+SELECT COUNT(*) AS 'Total Records'
+FROM dc_characters;
+
+
+-- 3. Call your totalRecords function (created in step 14 above) on the avengers table. What is the output?
+
+SELECT COUNT(*) AS 'Total Records'
+FROM avengers;
+
+-- 4. here is room for 3 new Avengers so invoke your newly created function (in step 13 above) 3 times to add 3 new members to the Avengers.
+
+INSERT INTO dc_characters (char_name, char_alias, char_powers, char_weapons, char_id)
+VALUES
+('Unknown', 'Ultra-Humanite', 'Superhuman Strength', 'None', '31'),
+('Mari Jiwe McCabe', 'Vixen', 'Mimics Animal Powers', 'Tantu Totem', '32'),
+('Theadore Grant', 'Wildcat', 'Nine Lives', 'Motorcycle', '33');
+
+-- 5. Show that the addition of new members was successful.
+
+SELECT * FROM dc_characters;
+
