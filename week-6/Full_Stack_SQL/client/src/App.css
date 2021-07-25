@@ -1,3 +1,91 @@
+/* Global */
 .App {
   text-align: center;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+input {
+  width: 200px;
+  height: 20px;
+  font-size: 20px;
+  padding-left: 10px;
+  margin: 5px;
+}
+
+/* New Employee Form */
+.enter-information {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin: 50px;
+  margin-left: 200px;
+  margin-right: 200px;
+  padding: 50px;
+  background-color: rgb(203, 218, 233);
+  box-shadow: 10px 10px 5px rgba(17, 17, 17, 0.5);
+  border: 5px solid rgb(126, 120, 120);
+}
+
+.enter-information input {
+  padding: 5px;
+  width: 300px;
+  text-align: center;
+}
+
+.enter-information button {
+  border: none;
+  height: 30px;
+  width: 200px;
+}
+
+.employee-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.each-employee {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  margin: 10px;
+  font-family: "Courier New", Courier, monospace;
+  background-color: rgb(203, 218, 233);
+  box-shadow: 10px 10px 5px rgba(17, 17, 17, 0.5);
+}
+
+.each-employee button {
+  width: 340px;
+  height: 50px;
+  margin-top: 15px;
+}
+
+.each-employee h4 {
+  margin: 20px;
+  padding: 5px;
+  border-bottom: 1px solid rgb(124, 122, 122);
+}
+
+/* Whole card of employee information */
+.card-controls input {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-left: 10px;
+  width: 320px;
+  height: 50px;
+}
+
+.card-controls button {
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
 }
